@@ -1,0 +1,32 @@
+.DS_Store
+
+# Logs
+fe/logs
+fe/*.log
+fe/npm-debug.log*
+fe/yarn-debug.log*
+fe/yarn-error.log*
+fe/pnpm-debug.log*
+fe/lerna-debug.log*
+
+fe/node_modules
+fe/.DS_Store
+fe/dist
+fe/dist-ssr
+fe/coverage
+fe/*.local
+
+fe/cypress/videos/
+fe/cypress/screenshots/
+
+# Editor directories and files
+fe/.vscode/*
+fe/.vscode/extensions.json
+fe/.idea
+fe/*.suo
+fe/*.ntvs*
+fe/*.njsproj
+fe/*.sln
+fe/*.sw?
+
+*.tsbuildinfo

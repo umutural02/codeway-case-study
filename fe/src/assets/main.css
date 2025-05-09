@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --color-codeway-blue-100: #1e1e2f;
+  --color-codeway-blue-200: #1e1e24;
+}
