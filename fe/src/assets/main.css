@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
 @theme {
+  --color-codeway-button-start: #4056c9;
+  --color-codeway-button-end: #566fec;
+  --color-codeway-blue-50: #32325d;
   --color-codeway-blue-100: #1e1e2f;
   --color-codeway-blue-200: #1e1e24;
+  --color-codeway-border: #252a41;
+  --color-codeway-border-focus: #9c3a8f;
+  --color-codeway-text-placeholder: #6c757b;
+  --color-codeway-text: #d2d2d4;
 }
