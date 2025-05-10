@@ -15,6 +15,7 @@ fe/dist
 fe/dist-ssr
 fe/coverage
 fe/*.local
+fe/.env
 
 fe/cypress/videos/
 fe/cypress/screenshots/
