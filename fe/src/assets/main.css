@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-codeway-button-start: #4056c9;
-  --color-codeway-button-end: #566fec;
+  --color-codeway-blue-button-start: #4056c9;
+  --color-codeway-blue-button-end: #566fec;
+  --color-codeway-red-button-start: #f2383f;
+  --color-codeway-red-button-end: #f85076;
+  --color-codeway-cyan-button-start: #01b5e4;
+  --color-codeway-cyan-button-end: #05e7c9;
+
   --color-codeway-blue-50: #32325d;
   --color-codeway-blue-100: #1e1e2f;
   --color-codeway-blue-200: #1e1e24;
@@ -10,4 +15,21 @@
   --color-codeway-border-focus: #9c3a8f;
   --color-codeway-text-placeholder: #6c757b;
   --color-codeway-text: #d2d2d4;
+  --color-codeway-text-blue: #778ba3;
+}
+
+.codeway-input {
+  @apply w-full border border-codeway-border focus:border-codeway-border-focus focus:outline-none p-2 rounded-md placeholder:text-codeway-text-placeholder text-codeway-text bg-transparent;
+}
+
+.codeway-cyan-button {
+  @apply bg-gradient-to-r from-codeway-cyan-button-start to-codeway-cyan-button-end p-1 px-4 text-white rounded-md hover:opacity-80 hover:cursor-pointer;
+}
+
+.codeway-blue-button {
+  @apply bg-gradient-to-r from-codeway-blue-button-start to-codeway-blue-button-end p-1 px-4 text-white rounded-md hover:opacity-80 hover:cursor-pointer;
+}
+
+.codeway-red-button {
+  @apply bg-gradient-to-r from-codeway-red-button-start to-codeway-red-button-end p-1 px-4 text-white rounded-md hover:opacity-80 hover:cursor-pointer;
 }

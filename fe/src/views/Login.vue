@@ -16,12 +16,7 @@
           placeholder="Password"
           class="w-full border border-codeway-border focus:border-codeway-border-focus focus:outline-none focus:ring-0 p-2 rounded-b-md placeholder:text-codeway-text-placeholder text-codeway-text"
         />
-        <button
-          type="submit"
-          class="bg-gradient-to-r from-codeway-button-start to-codeway-button-end text-white p-2 rounded-md mt-2"
-        >
-          Sign in
-        </button>
+        <button type="submit" class="codeway-blue-button mt-2">Sign in</button>
       </form>
       <p class="text-codeway-text-placeholder text-sm mt-16">Codeway © 2021</p>
     </div>

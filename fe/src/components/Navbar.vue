@@ -39,7 +39,6 @@ const auth = getAuth();
 onMounted(() => {
   onAuthStateChanged(auth, (currentUser) => {
     user.value = currentUser;
-    console.log(user.value);
   });
 });
 
