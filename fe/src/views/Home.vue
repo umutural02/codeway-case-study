@@ -3,13 +3,15 @@
     <!-- Mobile View -->
     <div class="grid grid-cols-1 md:hidden gap-4">
       <div
-        v-for="item in dummyData"
-        :key="item.key"
+        v-for="item in parameters"
+        :key="item.parameterKey"
         class="border border-white rounded-xl p-4 gap-1"
       >
         <p class="font-bold text-codeway-text">
           Parameter Key:
-          <span class="text-codeway-text-placeholder">{{ item.key }}</span>
+          <span class="text-codeway-text-placeholder">{{
+            item.parameterKey
+          }}</span>
         </p>
 
         <p class="font-bold text-codeway-text">
@@ -46,8 +48,8 @@
           </tr>
         </thead>
         <tbody class="text-codeway-text text-sm *:font-light">
-          <tr v-for="item in dummyData" :key="item.key">
-            <td>{{ item.key }}</td>
+          <tr v-for="item in parameters" :key="item.parameterKey">
+            <td>{{ item.parameterKey }}</td>
             <td>{{ item.value }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.createDate }}</td>
@@ -90,30 +92,20 @@
 </template>
 
 <script setup>
-const dummyData = [
-  {
-    key: "freeUsageLimit",
-    value: 5,
-    description: "The number of times the user can use the app for free",
-    createDate: "2021-01-01",
-  },
-  {
-    key: "supportEmail",
-    value: "support@codeway.co",
-    description: "The email address of the support team",
-    createDate: "2021-01-01",
-  },
-  {
-    key: "privacyPage",
-    value: "https://codeway.com/privacy_en.html",
-    description: "The URL of the privacy page",
-    createDate: "2021-01-01",
-  },
-  {
-    key: "minimumVersion",
-    value: "1.0",
-    description: "The minimum version of the app",
-    createDate: "2021-01-01",
-  },
-];
+import { ref, onMounted } from "vue";
+import { apiGet } from "@/api";
+
+const parameters = ref([]);
+
+onMounted(async () => {
+  try {
+    const response = await apiGet("/parameters");
+    parameters.value = response.data;
+  } catch (error) {
+    console.error(
+      "Failed to load parameters:",
+      error.response?.data || error.message
+    );
+  }
+});
 </script>
