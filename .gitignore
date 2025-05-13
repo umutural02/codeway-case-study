@@ -40,3 +40,4 @@ be/dist-ssr
 be/coverage
 be/*.local
 be/.env
+be/serviceAccountKey.json
