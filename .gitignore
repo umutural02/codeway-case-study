@@ -31,3 +31,12 @@ fe/*.sln
 fe/*.sw?
 
 *.tsbuildinfo
+
+
+be/node_modules
+be/.DS_Store
+be/dist
+be/dist-ssr
+be/coverage
+be/*.local
+be/.env
