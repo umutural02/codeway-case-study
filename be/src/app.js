@@ -1,10 +1,12 @@
 import "dotenv/config";
-
 import express from "express";
 import parameterRoutes from "./routes/parameters.js";
+import { checkApiToken } from "./middlewares/checkApiToken.js";
 
 const app = express();
 app.use(express.json());
+
+app.use(checkApiToken);
 
 app.use("/parameters", parameterRoutes);
 
