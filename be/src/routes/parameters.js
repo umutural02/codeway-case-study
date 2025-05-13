@@ -1,5 +1,6 @@
 import express from "express";
 import { db } from "../config/firebase.js";
+import { authenticateFirebase } from "../middlewares/authenticateFirebase.js";
 
 const router = express.Router();
 
@@ -31,8 +32,7 @@ router.get("/test", async (req, res) => {
   }
 });
 
-// ✅ Test POST Connection
-router.post("/test", async (req, res) => {
+router.post("/test", authenticateFirebase, async (req, res) => {
   try {
     const { parameterKey, value } = req.body;
 
