@@ -52,7 +52,13 @@ router.post("/", authenticateFirebase, async (req, res) => {
 
   res.status(201).json({
     message: "Parameter created",
-    data,
+    data: {
+      parameterKey: data.parameterKey,
+      value: data.defaultValue,
+      description: data.description,
+      createDate: data.createDate,
+      version: data.version,
+    },
   });
 });
 
