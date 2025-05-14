@@ -23,3 +23,13 @@ export async function apiPost(path, data = {}, params = {}) {
   const headers = await getAuthHeaders();
   return axios.post(`${API_BASE_URL}${path}`, data, { headers, params });
 }
+
+export async function apiPut(path, data = {}, params = {}) {
+  const headers = await getAuthHeaders();
+  return axios.put(`${API_BASE_URL}${path}`, data, { headers, params });
+}
+
+export async function apiDelete(path, params = {}) {
+  const headers = await getAuthHeaders();
+  return axios.delete(`${API_BASE_URL}${path}`, { headers, params });
+}
