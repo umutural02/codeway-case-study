@@ -31,9 +31,13 @@ router.get("/", async (req, res) => {
   const snapshot = await db.collection("parameters").get();
   const allParams = snapshot.docs.map((doc) => {
     const data = doc.data();
+    const localizedValue = region && data.localizedValues?.[region];
+    const valueToSend =
+      localizedValue !== undefined ? localizedValue : data.defaultValue;
+
     return {
       parameterKey: data.parameterKey,
-      value: region ? data.localizedValues?.[region] : data.defaultValue,
+      value: valueToSend,
       description: data.description || "",
       createDate: data.createDate || "",
       version: data.version || 0,
