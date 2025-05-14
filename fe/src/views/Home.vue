@@ -313,9 +313,9 @@ async function fetchParameters() {
   }
 
   const response = await apiGet("/parameters", params);
-  if (!response) return;
+  if (!response?.data) return;
 
-  parameters.value = response;
+  parameters.value = response.data;
 }
 async function addParameter() {
   if (!createForm.value.parameterKey || !createForm.value.value) {
@@ -324,7 +324,7 @@ async function addParameter() {
   }
 
   const response = await apiPost("/parameters", createForm.value);
-  if (!response) return;
+  if (!response?.data) return;
 
   createForm.value = { ...defaultForm };
   parameters.value.push(response.data);
@@ -333,7 +333,7 @@ async function deleteParameter(parameterKey) {
   if (!confirm(`Are you sure you want to delete "${parameterKey}"?`)) return;
 
   const response = await apiDelete("/parameters", { parameterKey });
-  if (!response) return;
+  if (!response?.data) return;
 
   parameters.value = parameters.value.filter(
     (item) => item.parameterKey !== parameterKey
@@ -348,8 +348,11 @@ async function editParameter(item) {
   }
 
   const response = await apiPut("/parameters", editForm.value, params);
-  if (!response) return;
+
+  /* C */
   editForm.value = { ...defaultForm };
+  if (!response?.data) return;
+
   Object.assign(item, response.data);
 }
 </script>

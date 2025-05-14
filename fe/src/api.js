@@ -24,7 +24,7 @@ export async function apiGet(path, params = {}) {
     return response.data;
   } catch (error) {
     alert(error.response.data.message);
-    return null;
+    return error.response.data;
   }
 }
 
@@ -38,7 +38,7 @@ export async function apiPost(path, data = {}, params = {}) {
     return response.data;
   } catch (error) {
     alert(error.response.data.message);
-    return null;
+    return error.response.data;
   }
 }
 
@@ -52,7 +52,7 @@ export async function apiPut(path, data = {}, params = {}) {
     return response.data;
   } catch (error) {
     alert(error.response.data.message);
-    return null;
+    return error.response.data;
   }
 }
 
@@ -67,6 +67,6 @@ export async function apiDelete(path, data = {}, params = {}) {
     return response.data;
   } catch (error) {
     alert(error.response.data.message);
-    return null;
+    return error.response.data;
   }
 }

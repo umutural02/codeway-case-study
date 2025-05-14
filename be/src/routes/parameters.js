@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
     };
   });
 
-  return res.json(allParams);
+  return res.json({ data: allParams });
 });
 
 router.post("/", authenticateFirebase, async (req, res) => {
