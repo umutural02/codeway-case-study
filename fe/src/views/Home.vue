@@ -99,8 +99,15 @@
             <td>{{ item.description }}</td>
             <td>{{ item.createDate }}</td>
             <td class="flex gap-4">
-              <button class="codeway-blue-button">Edit</button>
-              <button class="codeway-red-button">Delete</button>
+              <button class="codeway-blue-button" @click="editParameter(item)">
+                Edit
+              </button>
+              <button
+                class="codeway-red-button"
+                @click="deleteParameter(item.parameterKey)"
+              >
+                Del
+              </button>
             </td>
           </tr>
 
@@ -143,7 +150,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { apiGet, apiPost } from "@/api";
+import { apiGet, apiPost, apiDelete } from "@/api";
 
 const parameters = ref([]);
 
@@ -187,6 +194,20 @@ async function addParameter() {
     fetchParameters();
   } catch (error) {
     alert("Failed to add parameter. Please try again.");
+  }
+}
+
+async function deleteParameter(key) {
+  if (!confirm(`Are you sure you want to delete "${key}"?`)) return;
+
+  try {
+    await apiDelete("/parameters", { key });
+    fetchParameters();
+  } catch (error) {
+    console.error(
+      "Failed to delete parameter:",
+      error.response?.data || error.message
+    );
   }
 }
 </script>

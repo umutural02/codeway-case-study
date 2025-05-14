@@ -29,7 +29,7 @@ export async function apiPut(path, data = {}, params = {}) {
   return axios.put(`${API_BASE_URL}${path}`, data, { headers, params });
 }
 
-export async function apiDelete(path, params = {}) {
+export async function apiDelete(path, data = {}, params = {}) {
   const headers = await getAuthHeaders();
-  return axios.delete(`${API_BASE_URL}${path}`, { headers, params });
+  return axios.delete(`${API_BASE_URL}${path}`, { headers, params, data });
 }
