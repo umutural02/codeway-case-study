@@ -30,14 +30,14 @@ router.post("/", authenticateFirebase, async (req, res) => {
   const { parameterKey, value, description = "" } = req.body;
 
   if (!parameterKey || value === undefined) {
-    return res.status(400).json({ error: "key and value are required" });
+    return res.status(400).json({ message: "Key and value are required" });
   }
 
   const docRef = db.collection("parameters").doc(parameterKey);
   const docSnap = await docRef.get();
 
   if (docSnap.exists) {
-    return res.status(400).json({ error: "Parameter already exists" });
+    return res.status(400).json({ message: "Parameter already exists" });
   }
 
   let data = {
@@ -61,9 +61,7 @@ router.put("/", authenticateFirebase, async (req, res) => {
   const { region } = req.query;
 
   if (!parameterKey || !value || !version) {
-    return res
-      .status(400)
-      .json({ error: "key, value, and version are required" });
+    return res.status(400).json({ message: "Key and value are required" });
   }
 
   const docRef = db.collection("parameters").doc(parameterKey);
@@ -71,7 +69,7 @@ router.put("/", authenticateFirebase, async (req, res) => {
 
   /* Check if the parameter exists */
   if (!docSnap.exists) {
-    return res.status(404).json({ error: "Parameter not found" });
+    return res.status(404).json({ message: "Parameter not found" });
   }
 
   const data = docSnap.data();
@@ -79,7 +77,8 @@ router.put("/", authenticateFirebase, async (req, res) => {
   /* Check if the version is correct */
   if (data.version !== version) {
     return res.status(409).json({
-      error: "Version conflict",
+      message:
+        "Someone has updated the parameter. Please check the new value and try again.",
       data: {
         parameterKey: data.parameterKey,
         value: data.defaultValue,
@@ -118,7 +117,7 @@ router.delete("/", authenticateFirebase, async (req, res) => {
   const { parameterKey } = req.body;
 
   if (!parameterKey) {
-    return res.status(400).json({ error: "key is required" });
+    return res.status(400).json({ message: "Key is required" });
   }
 
   const docRef = db.collection("parameters").doc(parameterKey);
@@ -126,7 +125,7 @@ router.delete("/", authenticateFirebase, async (req, res) => {
 
   /* Check if the parameter exists */
   if (!docSnap.exists) {
-    return res.status(404).json({ error: "Parameter not found" });
+    return res.status(404).json({ message: "Parameter not found" });
   }
   await docRef.delete();
 
