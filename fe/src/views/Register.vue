@@ -20,7 +20,7 @@
         />
         <button type="submit" class="codeway-blue-button mt-2">Sign up</button>
         <router-link
-          to="/signup"
+          to="/signin"
           class="text-codeway-text-placeholder text-center text-sm mt-2"
         >
           Already have an account?
