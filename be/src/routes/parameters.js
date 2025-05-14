@@ -5,7 +5,7 @@ import { authenticateFirebase } from "../middlewares/authenticateFirebase.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const { key, country } = req.query;
+  const { key, region } = req.query;
 
   if (key) {
     const docSnap = await db.collection("parameters").doc(key).get();
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
     }
 
     const data = docSnap.data();
-    const localizedValue = country && data.localizedValues?.[country];
+    const localizedValue = region && data.localizedValues?.[region];
     const valueToSend =
       localizedValue !== undefined ? localizedValue : data.defaultValue;
 
@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
     const data = doc.data();
     return {
       parameterKey: data.parameterKey,
-      value: country ? data.localizedValues?.[country] : data.defaultValue,
+      value: region ? data.localizedValues?.[region] : data.defaultValue,
       description: data.description || "",
       createDate: data.createDate || "",
       version: data.version || 0,
@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", authenticateFirebase, async (req, res) => {
   const { key, value, description = "" } = req.body;
-  const { country } = req.query;
+  const { region } = req.query;
 
   if (!key || value === undefined) {
     return res.status(400).json({ error: "key and value are required" });
@@ -66,8 +66,8 @@ router.post("/", authenticateFirebase, async (req, res) => {
   }
 
   // Update either localized or default value
-  if (country) {
-    data.localizedValues = { ...data.localizedValues, [country]: value };
+  if (region) {
+    data.localizedValues = { ...data.localizedValues, [region]: value };
   } else {
     data.defaultValue = value;
   }
@@ -78,7 +78,7 @@ router.post("/", authenticateFirebase, async (req, res) => {
 
   await docRef.set(data);
 
-  const localizedValue = country && data.localizedValues?.[country];
+  const localizedValue = region && data.localizedValues?.[region];
   const valueToSend =
     localizedValue !== undefined ? localizedValue : data.defaultValue;
 
@@ -94,7 +94,7 @@ router.post("/", authenticateFirebase, async (req, res) => {
 
 router.put("/", authenticateFirebase, async (req, res) => {
   const { key, value, description = "", version } = req.body;
-  const { country } = req.query;
+  const { region } = req.query;
 
   if (!key || value === undefined || !version) {
     return res
@@ -121,8 +121,8 @@ router.put("/", authenticateFirebase, async (req, res) => {
     }
 
     // Prepare updated data
-    if (country) {
-      data.localizedValues = { ...data.localizedValues, [country]: value };
+    if (region) {
+      data.localizedValues = { ...data.localizedValues, [region]: value };
     } else {
       data.defaultValue = value;
     }
@@ -132,7 +132,7 @@ router.put("/", authenticateFirebase, async (req, res) => {
 
     await docRef.set(data);
 
-    const localizedValue = country && data.localizedValues?.[country];
+    const localizedValue = region && data.localizedValues?.[region];
     const valueToSend =
       localizedValue !== undefined ? localizedValue : data.defaultValue;
 
