@@ -14,6 +14,7 @@
           <template v-if="user">
             <!-- User Icon Button and Dropdown -->
             <div class="relative">
+              <!-- User Icon Button -->
               <button
                 @click.stop="toggleDropdown"
                 class="flex items-center space-x-2 text-white"
@@ -27,7 +28,6 @@
                 id="user-dropdown"
                 class="absolute right-0 mt-2 bg-codeway-blue-50 rounded-lg shadow-lg text-white p-2 py-4 w-60 z-50 grid gap-2"
               >
-                <!-- Welcome Message -->
                 <p class="text-sm">{{ user.email }}</p>
 
                 <!-- Region Selector -->
@@ -58,7 +58,7 @@
           </template>
 
           <template v-else>
-            <router-link to="/login" class="text-white">Sign in</router-link>
+            <router-link to="/signin" class="text-white">Sign in</router-link>
           </template>
         </div>
       </div>
@@ -94,10 +94,12 @@ const regions = [
 ];
 
 onMounted(() => {
+  /* To get the current user */
   onAuthStateChanged(auth, (currentUser) => {
     user.value = currentUser;
   });
 
+  /* To close the dropdown when clicking outside of it */
   document.addEventListener("click", handleClickOutside);
 });
 
@@ -128,7 +130,7 @@ function handleClickOutside(event) {
 async function handleSignOut() {
   try {
     await signOut(auth);
-    router.push("/login");
+    router.push("/signin");
   } catch (error) {
     console.error("Error signing out:", error);
   }

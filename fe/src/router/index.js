@@ -15,8 +15,8 @@ const router = createRouter({
       },
     },
     {
-      path: "/login",
-      name: "login",
+      path: "/signin",
+      name: "signin",
       component: Login,
       meta: {
         requiresAuth: false,
@@ -46,7 +46,7 @@ router.beforeEach(async (to, from, next) => {
     if (currentUser) {
       next();
     } else {
-      next({ name: "login" });
+      next({ name: "signin" });
     }
   } else {
     next();
