@@ -10,6 +10,6 @@ app.use(express.json());
 
 app.use(checkApiToken);
 
-app.use("/parameters", parameterRoutes);
+app.use("/api/v1/parameters", parameterRoutes);
 
 export default app;
