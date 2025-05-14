@@ -42,7 +42,7 @@ router.post("/", authenticateFirebase, async (req, res) => {
 
   let data = {
     parameterKey: parameterKey,
-    value,
+    defaultValue: value,
     description,
     createDate: new Date().toISOString(),
     version: 1,
