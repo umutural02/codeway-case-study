@@ -81,7 +81,7 @@
           <p class="font-bold text-codeway-text">
             Create Date:
             <span class="text-codeway-text-placeholder">{{
-              item.createDate.split("T")[0]
+              formatDate(item.createDate)
             }}</span>
           </p>
 
@@ -197,7 +197,7 @@
               <td class="w-full">{{ item.parameterKey }}</td>
               <td class="w-full">{{ item.value }}</td>
               <td class="w-full">{{ item.description }}</td>
-              <td class="w-full">{{ item.createDate.split("T")[0] }}</td>
+              <td class="w-full">{{ formatDate(item.createDate) }}</td>
               <td class="flex gap-4">
                 <button
                   class="codeway-blue-button w-20"
@@ -290,6 +290,19 @@ window.addEventListener("storage", () => {
   selectedRegion.value = localStorage.getItem("selectedRegion") || "";
   fetchParameters();
 });
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
 
 /* CRUD FUNCTIONS */
 
