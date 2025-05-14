@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const router = createRouter({
@@ -21,6 +22,11 @@ const router = createRouter({
       meta: {
         requiresAuth: false,
       },
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      component: Register,
     },
   ],
 });
