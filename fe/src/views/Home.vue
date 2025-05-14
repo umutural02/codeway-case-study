@@ -8,7 +8,7 @@
         class="border border-white rounded-xl p-4 gap-1"
       >
         <!-- Edit Mode -->
-        <template v-if="editingKey === item.parameterKey">
+        <template v-if="editForm.parameterKey === item.parameterKey">
           <!-- Parameter Key -->
           <p class="font-bold text-codeway-text">
             Parameter Key:
@@ -20,13 +20,16 @@
           <!-- Value -->
           <p class="font-bold text-codeway-text">
             Value:
-            <input v-model="editValue" class="codeway-input w-full" />
+            <input v-model="editForm.value" class="codeway-input w-full" />
           </p>
 
           <!-- Description -->
           <p class="font-bold text-codeway-text">
             Description:
-            <input v-model="editDescription" class="codeway-input w-full" />
+            <input
+              v-model="editForm.description"
+              class="codeway-input w-full"
+            />
           </p>
 
           <!-- Apply and Cancel Buttons -->
@@ -37,7 +40,14 @@
             >
               Apply
             </button>
-            <button class="codeway-red-button flex-1" @click="cancelEditing">
+            <button
+              class="codeway-red-button flex-1"
+              @click="
+                () => {
+                  editForm = { ...defaultForm };
+                }
+              "
+            >
               Cancel
             </button>
           </div>
@@ -79,15 +89,19 @@
           <div class="flex gap-4 mt-2">
             <button
               class="codeway-blue-button flex-1"
-              @click="startEditing(item)"
-              :disabled="editingKey !== null"
+              @click="
+                () => {
+                  editForm = { ...item };
+                }
+              "
+              :disabled="editForm.parameterKey !== ''"
             >
               Edit
             </button>
             <button
               class="codeway-red-button flex-1"
               @click="deleteParameter(item.parameterKey)"
-              :disabled="editingKey !== null"
+              :disabled="editForm.parameterKey !== ''"
             >
               Del
             </button>
@@ -101,7 +115,7 @@
 
         <!-- Parameter Key -->
         <input
-          v-model="newKey"
+          v-model="createForm.parameterKey"
           type="text"
           placeholder="Parameter Key"
           class="codeway-input w-full mb-2"
@@ -109,7 +123,7 @@
 
         <!-- Value -->
         <input
-          v-model="newValue"
+          v-model="createForm.value"
           type="text"
           placeholder="Value"
           class="codeway-input w-full mb-2"
@@ -117,7 +131,7 @@
 
         <!-- Description -->
         <input
-          v-model="newDescription"
+          v-model="createForm.description"
           type="text"
           placeholder="Description"
           class="codeway-input w-full mb-2"
@@ -147,14 +161,14 @@
           <!-- Parameter List -->
           <tr v-for="item in parameters" :key="item.parameterKey">
             <!-- Edit Mode -->
-            <template v-if="editingKey === item.parameterKey">
+            <template v-if="editForm.parameterKey === item.parameterKey">
               <td class="w-full">{{ item.parameterKey }}</td>
               <td class="w-full">
-                <input v-model="editValue" class="codeway-input !w-9/10" />
+                <input v-model="editForm.value" class="codeway-input !w-9/10" />
               </td>
               <td colspan="2" class="w-full">
                 <input
-                  v-model="editDescription"
+                  v-model="editForm.description"
                   class="codeway-input !w-9/10"
                 />
               </td>
@@ -165,7 +179,14 @@
                 >
                   Apply
                 </button>
-                <button class="codeway-red-button w-20" @click="cancelEditing">
+                <button
+                  class="codeway-red-button w-20"
+                  @click="
+                    () => {
+                      editForm = {};
+                    }
+                  "
+                >
                   Cancel
                 </button>
               </td>
@@ -180,15 +201,19 @@
               <td class="flex gap-4">
                 <button
                   class="codeway-blue-button w-20"
-                  @click="startEditing(item)"
-                  :disabled="editingKey !== null"
+                  @click="
+                    () => {
+                      editForm = { ...item };
+                    }
+                  "
+                  :disabled="editForm.parameterKey !== null"
                 >
                   Edit
                 </button>
                 <button
                   class="codeway-red-button w-20"
                   @click="deleteParameter(item.parameterKey)"
-                  :disabled="editingKey !== null"
+                  :disabled="editForm.parameterKey !== null"
                 >
                   Del
                 </button>
@@ -204,7 +229,7 @@
                 type="text"
                 placeholder="Parameter Key"
                 class="codeway-input !w-9/10"
-                v-model="newKey"
+                v-model="createForm.parameterKey"
               />
             </td>
             <!-- Value -->
@@ -213,7 +238,7 @@
                 type="text"
                 placeholder="Value"
                 class="codeway-input !w-9/10"
-                v-model="newValue"
+                v-model="createForm.value"
               />
             </td>
             <!-- Description -->
@@ -222,7 +247,7 @@
                 type="text"
                 placeholder="Description"
                 class="codeway-input !w-9/10"
-                v-model="newDescription"
+                v-model="createForm.description"
               />
             </td>
             <!-- Add Button -->
@@ -244,19 +269,18 @@ import { apiGet, apiPost, apiDelete, apiPut } from "@/api";
 
 const parameters = ref([]);
 
-const newKey = ref("");
-const newValue = ref("");
-const newDescription = ref("");
-
-const editingKey = ref(null);
-const editValue = ref("");
-const editDescription = ref("");
+const defaultForm = {
+  parameterKey: "",
+  value: "",
+  description: "",
+  version: 0,
+};
+const createForm = ref({ ...defaultForm });
+const editForm = ref({ ...defaultForm });
 
 const selectedRegion = ref(localStorage.getItem("selectedRegion") || "");
 
 onMounted(fetchParameters);
-
-/* EDITING FUNCTIONS */
 
 /* 
   This is not the prettiest solution, but for this kind of an application it is the easiest and one of the fastest to implement.
@@ -266,16 +290,6 @@ window.addEventListener("storage", () => {
   selectedRegion.value = localStorage.getItem("selectedRegion") || "";
   fetchParameters();
 });
-function startEditing(item) {
-  editingKey.value = item.parameterKey;
-  editValue.value = item.value;
-  editDescription.value = item.description;
-}
-function cancelEditing() {
-  editingKey.value = null;
-  editValue.value = "";
-  editDescription.value = "";
-}
 
 /* CRUD FUNCTIONS */
 
@@ -289,16 +303,12 @@ async function fetchParameters() {
   parameters.value = response.data;
 }
 async function addParameter() {
-  if (!newKey.value || !newValue.value) {
+  if (!createForm.value.parameterKey || !createForm.value.value) {
     alert("Key and Value are required");
     return;
   }
 
-  const response = await apiPost("/parameters", {
-    parameterKey: newKey.value,
-    value: newValue.value,
-    description: newDescription.value,
-  });
+  const response = await apiPost("/parameters", createForm.value);
 
   if (response.status !== 201) {
     alert("Failed to add parameter. Please try again.");
@@ -306,10 +316,9 @@ async function addParameter() {
   }
 
   // Clear inputs
-  newKey.value = "";
-  newValue.value = "";
-  newDescription.value = "";
+  createForm.value = { ...defaultForm };
 
+  console.log(response.data.data);
   // Refresh list
   parameters.value.push(response.data.data);
 }
@@ -328,27 +337,18 @@ async function deleteParameter(parameterKey) {
   );
 }
 async function editParameter(item) {
-  if (!editingKey.value || !item) return;
+  if (!editForm.value.parameterKey || !item) return;
 
   const params = {};
   if (selectedRegion.value) {
     params.region = selectedRegion.value;
   }
 
-  const response = await apiPut(
-    "/parameters",
-    {
-      parameterKey: editingKey.value,
-      value: editValue.value,
-      description: editDescription.value,
-      version: item.version,
-    },
-    params
-  );
+  const response = await apiPut("/parameters", editForm.value, params);
 
   /* Check response and update the parameter accordingly */
   if (response.status === 200) {
-    cancelEditing();
+    editForm.value = { ...defaultForm };
     item.value = response.data.data.value;
   } else if (response.status === 409) {
     alert(
