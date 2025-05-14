@@ -18,6 +18,12 @@
           placeholder="Password"
           class="w-full border border-codeway-border focus:border-codeway-border-focus focus:outline-none focus:ring-0 p-2 rounded-b-md placeholder:text-codeway-text-placeholder text-codeway-text"
         />
+        <input
+          v-model="confirmPassword"
+          type="password"
+          placeholder="Confirm password"
+          class="w-full border border-codeway-border focus:border-codeway-border-focus focus:outline-none focus:ring-0 p-2 rounded-b-md placeholder:text-codeway-text-placeholder text-codeway-text"
+        />
         <button type="submit" class="codeway-blue-button mt-2">Sign up</button>
         <router-link
           to="/signin"
@@ -42,8 +48,14 @@ const router = useRouter();
 
 const email = ref("");
 const password = ref("");
+const confirmPassword = ref("");
 
 const signup = () => {
+  if (password.value !== confirmPassword.value) {
+    alert("Passwords do not match.");
+    return;
+  }
+
   createUserWithEmailAndPassword(auth, email.value, password.value)
     .then(() => {
       router.push("/");
