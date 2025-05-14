@@ -24,6 +24,7 @@ router.get("/", async (req, res) => {
       value: valueToSend,
       description: data.description || "",
       createDate: data.createDate || "",
+      version: data.version || 0,
     });
   }
 
@@ -35,6 +36,7 @@ router.get("/", async (req, res) => {
       value: country ? data.localizedValues?.[country] : data.defaultValue,
       description: data.description || "",
       createDate: data.createDate || "",
+      version: data.version || 0,
     };
   });
 
@@ -86,6 +88,7 @@ router.post("/", authenticateFirebase, async (req, res) => {
     value: valueToSend,
     description: data.description,
     createDate: data.createDate,
+    version: data.version,
   });
 });
 
