@@ -206,14 +206,14 @@
                       editForm = { ...item };
                     }
                   "
-                  :disabled="editForm.parameterKey !== null"
+                  :disabled="editForm.parameterKey !== ''"
                 >
                   Edit
                 </button>
                 <button
                   class="codeway-red-button w-20"
                   @click="deleteParameter(item.parameterKey)"
-                  :disabled="editForm.parameterKey !== null"
+                  :disabled="editForm.parameterKey !== ''"
                 >
                   Del
                 </button>
@@ -318,7 +318,6 @@ async function addParameter() {
   // Clear inputs
   createForm.value = { ...defaultForm };
 
-  console.log(response.data.data);
   // Refresh list
   parameters.value.push(response.data.data);
 }
