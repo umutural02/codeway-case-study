@@ -263,10 +263,6 @@ onMounted(fetchParameters);
   A global state management solution would be better.
 */
 window.addEventListener("storage", () => {
-  console.log(
-    "Selected region changed:",
-    localStorage.getItem("selectedRegion")
-  );
   selectedRegion.value = localStorage.getItem("selectedRegion") || "";
   fetchParameters();
 });
@@ -315,7 +311,7 @@ async function addParameter() {
   newDescription.value = "";
 
   // Refresh list
-  parameters.value.push(response.data.data.value);
+  parameters.value.push(response.data.data);
 }
 async function deleteParameter(parameterKey) {
   if (!confirm(`Are you sure you want to delete "${parameterKey}"?`)) return;
