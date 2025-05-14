@@ -348,12 +348,15 @@ async function editParameter(item) {
   /* Check response and update the parameter accordingly */
   if (response.status === 200) {
     editForm.value = { ...defaultForm };
-    item.value = response.data.data.value;
+    // Update the parameter
+    Object.assign(item, response.data.data);
+  } else if (response.status === 409) {
   } else if (response.status === 409) {
     alert(
       "The parameter has been updated by another user. Please check the new value and try again."
     );
-    item.value = response.data.data.value;
+    // Update the parameter
+    Object.assign(item, response.data.data);
   } else {
     alert("Failed to update parameter. Please try again.");
   }
