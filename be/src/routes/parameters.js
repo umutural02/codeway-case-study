@@ -135,7 +135,12 @@ router.delete("/", authenticateFirebase, async (req, res) => {
   }
   await docRef.delete();
 
-  res.json({ message: `Parameter "${parameterKey}" deleted successfully` });
+  res.json({
+    message: `Parameter "${parameterKey}" deleted successfully`,
+    data: {
+      parameterKey,
+    },
+  });
 });
 
 export default router;
