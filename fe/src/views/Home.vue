@@ -266,7 +266,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { apiGet, apiPost, apiDelete, apiPut } from "@/api";
+import { useToast } from "vue-toastification";
 
+const toast = useToast();
 const parameters = ref([]);
 
 const defaultForm = {
@@ -319,7 +321,7 @@ async function fetchParameters() {
 }
 async function addParameter() {
   if (!createForm.value.parameterKey || !createForm.value.value) {
-    alert("Key and Value are required");
+    toast.error("Key and Value are required");
     return;
   }
 

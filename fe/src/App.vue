@@ -10,6 +10,9 @@
 <script setup>
 import Navbar from "./components/Navbar.vue";
 import { initializeApp } from "firebase/app";
+import { createApp } from "vue";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -20,5 +23,28 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+initializeApp(firebaseConfig);
+
+// Create vue app
+const app = createApp();
+
+const toastOptions = {
+  transition: "Vue-Toastification__bounce",
+  maxToasts: 20,
+  newestOnTop: true,
+  position: "top-center",
+  timeout: 3000,
+  closeOnClick: true,
+  pauseOnFocusLoss: true,
+  pauseOnHover: false,
+  draggable: true,
+  draggablePercent: 0.6,
+  showCloseButtonOnHover: true,
+  hideProgressBar: true,
+  closeButton: "button",
+  icon: true,
+  rtl: false,
+};
+app.use(Toast, toastOptions);
 </script>

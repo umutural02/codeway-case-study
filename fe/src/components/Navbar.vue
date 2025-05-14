@@ -70,6 +70,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 import UserIcon from "@/components/icons/UserIcon.vue";
 
 const user = ref(null);
@@ -132,7 +133,7 @@ async function handleSignOut() {
     await signOut(auth);
     router.push("/signin");
   } catch (error) {
-    console.error("Error signing out:", error);
+    toast.error("Error signing out:", error);
   }
 }
 </script>

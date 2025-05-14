@@ -34,12 +34,15 @@
 import { ref } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 
 const auth = getAuth();
 const router = useRouter();
 
 const email = ref("");
 const password = ref("");
+
+const toast = useToast();
 
 const login = () => {
   signInWithEmailAndPassword(auth, email.value, password.value)
@@ -60,10 +63,9 @@ const handleError = (error) => {
    * In the future, e-mail enumeration protection can be disabled to better handle errors.
    */
   if (error.code === "auth/invalid-credential") {
-    // TODO: Add a better visual feedback to the user.
-    alert("Invalid email or password");
+    toast.error("Invalid email or password");
   } else {
-    alert("An error occurred");
+    toast.error("An error occurred");
   }
 };
 </script>

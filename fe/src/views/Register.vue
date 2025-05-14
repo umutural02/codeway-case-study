@@ -42,6 +42,7 @@
 import { ref } from "vue";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 
 const auth = getAuth();
 const router = useRouter();
@@ -50,9 +51,11 @@ const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 
+const toast = useToast();
+
 const signup = () => {
   if (password.value !== confirmPassword.value) {
-    alert("Passwords do not match.");
+    toast.error("Passwords do not match.");
     return;
   }
 
@@ -67,13 +70,13 @@ const signup = () => {
 
 const handleError = (error) => {
   if (error.code === "auth/email-already-in-use") {
-    alert("This email is already in use.");
+    toast.error("This email is already in use.");
   } else if (error.code === "auth/invalid-email") {
-    alert("Invalid email address.");
+    toast.error("Invalid email address.");
   } else if (error.code === "auth/weak-password") {
-    alert("Password should be at least 6 characters.");
+    toast.error("Password should be at least 6 characters.");
   } else {
-    alert("An error occurred. Please try again.");
+    toast.error("An error occurred. Please try again.");
   }
 };
 </script>
