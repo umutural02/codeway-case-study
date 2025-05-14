@@ -9,17 +9,17 @@ A **Region-Aware Remote Configuration Management System** built with:
 
 ---
 
-## 🚀 Features
+##  Features
 
-- ✅ **Config Panel** to manage parameters and country-specific values.
-- ✅ **Secure API** with Firebase Authentication and API Token protection.
-- ✅ **Optimistic Locking** with version checks.
-- ✅ **Localized and Global Values** handling.
-- ✅ **Deployable to any cloud**.
+- **Config Panel** to manage parameters and country-specific values.
+- **Secure API** with Firebase Authentication and API Token protection.
+- **Optimistic Locking** with version checks.
+- **Localized and Global Values** handling.
+- **Deployable to any cloud**.
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 /be   # Node.js + Express Backend
@@ -28,7 +28,7 @@ A **Region-Aware Remote Configuration Management System** built with:
 
 ---
 
-## ✅ Firebase Project Setup Instructions
+## Firebase Project Setup Instructions
 
 ### 1. **Create a Firebase Project**
 1. Go to [Firebase Console](https://console.firebase.google.com/).
@@ -55,9 +55,9 @@ A **Region-Aware Remote Configuration Management System** built with:
 
 ---
 
-## ⚙️ Environment Setup
+## Environment Setup
 
-### ✅ Backend `/be/.env`
+### Backend `/be/.env`
 
 ```env
 API_TOKEN=YOUR_SECURE_API_TOKEN
@@ -73,7 +73,7 @@ GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_YOUR_SERVICE_ACCOUNT_KEY
 
 ---
 
-### ✅ Frontend `/fe/.env`
+### Frontend `/fe/.env`
 
 ```env
 VITE_API_BASE_URL=<your-backend-url>/api/v1
@@ -98,24 +98,24 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 ---
 
-## 🚀 Deployment on Render.com
+## Deployment on Render.com
 
-### ✅ 1. Push Your Repo to GitHub
+### 1. Push Your Repo to GitHub
 
-### ✅ 2. Deploy Backend (Web Service)
+### 2. Deploy Backend (Web Service)
 - **Root Directory:** `/be`
 - **Build Command:** `npm install`
 - **Start Command:** `node server.js`
 - **Environment Variables:** (see `/be/.env` section)
 - **Secret Files:** Upload the service account key file you downloaded to the path you defined in your environment variables.
 
-### ✅ 3. Deploy Frontend (Static Site)
+### 3. Deploy Frontend (Static Site)
 - **Root Directory:** `/fe`
 - **Build Command:** `npm install && npm run build`
 - **Publish Directory:** `dist`
 - **Environment Variables:** (see `/fe/.env` section)
 
-### ✅ 4. Add SPA Rewrite Rule
+### 4. Add SPA Rewrite Rule
 | Source | Destination | Type    |
 |-------|-------------|--------|
 | `/*`   | `/index.html` | Rewrite |
@@ -125,9 +125,9 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 
 
-## 🛠️ Local Development
+## Local Development
 
-### ✅ Backend
+### Backend
 
 ```bash
 cd be
@@ -136,7 +136,7 @@ node server.js
 ```
 > Access at: `http://localhost:3000`
 
-### ✅ Frontend
+### Frontend
 
 ```bash
 cd fe
@@ -147,18 +147,18 @@ npm run dev
 
 ## 📋 Example API Usage
 
-### ✅ GET All Parameters
+### GET All Parameters
 ```
 GET /parameters
 Headers: x-api-key, Authorization
 ```
 
-### ✅ GET Parameter by Key and Country
+### GET Parameter by Key and Country
 ```
 GET /parameters?key=freeUsageLimit&country=TR
 ```
 
-### ✅ POST New Parameter
+### POST New Parameter
 ```json
 POST /parameters
 {
@@ -168,7 +168,7 @@ POST /parameters
 }
 ```
 
-### ✅ PUT Update Parameter
+### PUT Update Parameter
 ```json
 PUT /parameters
 {
@@ -179,7 +179,7 @@ PUT /parameters
 }
 ```
 
-### ✅ DELETE Parameter
+### DELETE Parameter
 ```json
 DELETE /parameters
 {
@@ -189,13 +189,13 @@ DELETE /parameters
 
 ---
 
-## ✅ Final Deliverables Example
+## Final Deliverables Example
 - **Frontend Panel URL:** `https://codeway-case-study-1.onrender.com`
 - **API URL:** `https://codeway-case-study-1exu.onrender.com/api/v1`
 
 ---
 
-## ✅ Contact & Support
+## Contact & Support
 For questions or support, please contact me at umutural1596@gmail.com
 
 ---
