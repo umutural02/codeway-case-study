@@ -183,7 +183,7 @@
                   class="codeway-red-button w-20"
                   @click="
                     () => {
-                      editForm = {};
+                      editForm = { ...defaultForm };
                     }
                   "
                 >
