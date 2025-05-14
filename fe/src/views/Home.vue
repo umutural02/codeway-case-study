@@ -225,6 +225,21 @@ const editingKey = ref(null);
 const editValue = ref("");
 const editDescription = ref("");
 
+const selectedRegion = ref(localStorage.getItem("selectedRegion") || "");
+/* This is not the prettiest solution, but for this kind of an application it is the easiest and fastest one.
+  A global state management solution would be better.
+*/
+window.addEventListener("storage", () => {
+  console.log(
+    "Selected region changed:",
+    localStorage.getItem("selectedRegion")
+  );
+  selectedRegion.value = localStorage.getItem("selectedRegion") || "";
+  fetchParameters();
+});
+
+onMounted(fetchParameters);
+
 function startEditing(item) {
   editingKey.value = item.parameterKey;
   editValue.value = item.value;
@@ -237,11 +252,14 @@ function cancelEditing() {
   editDescription.value = "";
 }
 
-onMounted(fetchParameters);
-
 async function fetchParameters() {
   try {
-    const response = await apiGet("/parameters");
+    const params = {};
+    if (selectedRegion.value) {
+      params.region = selectedRegion.value;
+    }
+
+    const response = await apiGet("/parameters", params);
     parameters.value = response.data;
   } catch (error) {
     console.error(
@@ -294,14 +312,22 @@ async function editParameter(item) {
   if (!editingKey.value || !item) return;
 
   try {
-    const response = await apiPut("/parameters", {
-      key: editingKey.value,
-      value: editValue.value,
-      description: editDescription.value,
-      version: item.version,
-    });
+    const params = {};
+    if (selectedRegion.value) {
+      params.region = selectedRegion.value;
+    }
 
-    console.log("Updated:", response.data);
+    await apiPut(
+      "/parameters",
+      {
+        key: editingKey.value,
+        value: editValue.value,
+        description: editDescription.value,
+        version: item.version,
+      },
+      params
+    );
+
     cancelEditing();
     fetchParameters();
   } catch (error) {
