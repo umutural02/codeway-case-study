@@ -16,20 +16,57 @@ async function getAuthHeaders() {
 
 export async function apiGet(path, params = {}) {
   const headers = await getAuthHeaders();
-  return axios.get(`${API_BASE_URL}${path}`, { headers, params });
+  try {
+    const response = await axios.get(`${API_BASE_URL}${path}`, {
+      headers,
+      params,
+    });
+    return response.data;
+  } catch (error) {
+    alert(error.response.data.message);
+    return null;
+  }
 }
 
 export async function apiPost(path, data = {}, params = {}) {
   const headers = await getAuthHeaders();
-  return axios.post(`${API_BASE_URL}${path}`, data, { headers, params });
+  try {
+    const response = await axios.post(`${API_BASE_URL}${path}`, data, {
+      headers,
+      params,
+    });
+    return response.data;
+  } catch (error) {
+    alert(error.response.data.message);
+    return null;
+  }
 }
 
 export async function apiPut(path, data = {}, params = {}) {
   const headers = await getAuthHeaders();
-  return axios.put(`${API_BASE_URL}${path}`, data, { headers, params });
+  try {
+    const response = await axios.put(`${API_BASE_URL}${path}`, data, {
+      headers,
+      params,
+    });
+    return response.data;
+  } catch (error) {
+    alert(error.response.data.message);
+    return null;
+  }
 }
 
 export async function apiDelete(path, data = {}, params = {}) {
   const headers = await getAuthHeaders();
-  return axios.delete(`${API_BASE_URL}${path}`, { headers, params, data });
+  try {
+    const response = await axios.delete(`${API_BASE_URL}${path}`, {
+      headers,
+      params,
+      data,
+    });
+    return response.data;
+  } catch (error) {
+    alert(error.response.data.message);
+    return null;
+  }
 }

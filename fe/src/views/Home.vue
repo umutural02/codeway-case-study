@@ -300,7 +300,9 @@ async function fetchParameters() {
   }
 
   const response = await apiGet("/parameters", params);
-  parameters.value = response.data;
+  if (!response) return;
+
+  parameters.value = response;
 }
 async function addParameter() {
   if (!createForm.value.parameterKey || !createForm.value.value) {
@@ -309,28 +311,17 @@ async function addParameter() {
   }
 
   const response = await apiPost("/parameters", createForm.value);
+  if (!response) return;
 
-  if (response.status !== 201) {
-    alert("Failed to add parameter. Please try again.");
-    return;
-  }
-
-  // Clear inputs
   createForm.value = { ...defaultForm };
-
-  // Refresh list
-  parameters.value.push(response.data.data);
+  parameters.value.push(response.data);
 }
 async function deleteParameter(parameterKey) {
   if (!confirm(`Are you sure you want to delete "${parameterKey}"?`)) return;
 
   const response = await apiDelete("/parameters", { parameterKey });
-  if (response.status !== 200) {
-    alert("Failed to delete parameter. Please try again.");
-    return;
-  }
+  if (!response) return;
 
-  /* Remove the parameter from the list */
   parameters.value = parameters.value.filter(
     (item) => item.parameterKey !== parameterKey
   );
@@ -344,21 +335,8 @@ async function editParameter(item) {
   }
 
   const response = await apiPut("/parameters", editForm.value, params);
-
-  /* Check response and update the parameter accordingly */
-  if (response.status === 200) {
-    editForm.value = { ...defaultForm };
-    // Update the parameter
-    Object.assign(item, response.data.data);
-  } else if (response.status === 409) {
-  } else if (response.status === 409) {
-    alert(
-      "The parameter has been updated by another user. Please check the new value and try again."
-    );
-    // Update the parameter
-    Object.assign(item, response.data.data);
-  } else {
-    alert("Failed to update parameter. Please try again.");
-  }
+  if (!response) return;
+  editForm.value = { ...defaultForm };
+  Object.assign(item, response.data);
 }
 </script>
